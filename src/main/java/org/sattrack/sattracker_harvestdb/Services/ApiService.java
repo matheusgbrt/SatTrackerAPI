@@ -1,6 +1,6 @@
 package org.sattrack.sattracker_harvestdb.Services;
 
-import org.sattrack.sattracker_harvestdb.Records.SatelliteData;
+import org.sattrack.sattracker_harvestdb.Records.CelestrakSatelliteData;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,7 +18,7 @@ public class ApiService {
                             .build();
     }
 
-    public Mono<SatelliteData[]> getSatelliteGroupData(String group, String format) {
+    public Mono<CelestrakSatelliteData[]> getSatelliteGroupData(String group, String format) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/NORAD/elements/gp.php")
@@ -26,6 +26,6 @@ public class ApiService {
                         .queryParam("FORMAT", format)
                         .build())
                 .retrieve()
-                .bodyToMono(SatelliteData[].class);
+                .bodyToMono(CelestrakSatelliteData[].class);
     }
 }

@@ -1,6 +1,6 @@
 package org.sattrack.sattracker_harvestdb.Records;
 
-public record SatelliteData(
+public record CelestrakSatelliteData(
         String OBJECT_NAME,
         String OBJECT_ID,
         String EPOCH,
