@@ -11,4 +11,9 @@ public interface SatelliteRepository extends JpaRepository<Satellite,Long> {
 
     List<Satellite> findAllBySatGroup(SatGroup satGroup);
 
+    Satellite findSatelliteById(long id);
+
+    Satellite findSatelliteByObjectId(String objectId);
+
+
 }
