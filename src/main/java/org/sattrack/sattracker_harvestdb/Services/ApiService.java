@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 public class ApiService {
 
     private final WebClient webClient;
+    private final String format = "json";
 
     public ApiService(@Value("${api.base-url}") String baseUrl, WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder
@@ -18,7 +19,7 @@ public class ApiService {
                             .build();
     }
 
-    public Mono<CelestrakSatelliteData[]> getSatelliteGroupData(String group, String format) {
+    public Mono<CelestrakSatelliteData[]> getSatelliteGroupData(String group) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/NORAD/elements/gp.php")

@@ -1,6 +1,8 @@
 package org.sattrack.sattracker_harvestdb.Records;
 
-public record CelestrakSatelliteData(
+import java.io.Serializable;
+
+public record CelestrakSatelliteData (
         String OBJECT_NAME,
         String OBJECT_ID,
         String EPOCH,
@@ -18,4 +20,4 @@ public record CelestrakSatelliteData(
         double BSTAR,
         double MEAN_MOTION_DOT,
         double MEAN_MOTION_DDOT
-) {}
+) implements Serializable {}

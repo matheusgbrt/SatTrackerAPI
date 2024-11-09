@@ -3,13 +3,14 @@ package org.sattrack.sattracker_harvestdb.Entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sats")
 public class Satellite {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sats_id_gen")
-    @SequenceGenerator(name = "sats_id_gen", sequenceName = "sats_sat_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sat_id", nullable = false)
     private Integer id;
 
@@ -24,7 +25,7 @@ public class Satellite {
     private String objectId;
 
     @Column(name = "epoch")
-    private Integer epoch;
+    private LocalDateTime epoch;
 
     @Column(name = "mean_motion")
     private BigDecimal meanMotion;
@@ -100,11 +101,9 @@ public class Satellite {
         this.objectId = objectId;
     }
 
-    public Integer getEpoch() {
-        return epoch;
-    }
+    public LocalDateTime getEpoch() {return epoch;}
 
-    public void setEpoch(Integer epoch) {
+    public void setEpoch(LocalDateTime epoch) {
         this.epoch = epoch;
     }
 

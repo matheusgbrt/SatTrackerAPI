@@ -7,35 +7,62 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String UPDATE_QUEUE = "satelliteUpdateQueue";
-    public static final String INSERT_QUEUE = "satelliteInsertQueue";
     public static final String EXCHANGE_NAME = "satelliteExchange";
 
-    public static final String UPDATE_ROUTING_KEY = "satellite.update";
-    public static final String INSERT_ROUTING_KEY = "satellite.insert";
+    public static final String SATELLITE_QUEUE = "satelliteQueue";
+    public static final String SATELLITE_GROUP_QUEUE = "satelliteGroupQueue";
+    public static final String SATELLITE_UPDATE_QUEUE = "satelliteUpdateQueue";
+    public static final String SATELLITE_INSERT_QUEUE = "satelliteInsertQueue";
+
+    public static final String SATELLITE_ROUTING_KEY = "satellite";
+    public static final String SATELLITE_UPDATE_ROUTING_KEY = "satelliteUpdate";
+    public static final String SATELLITE_INSERT_ROUTING_KEY = "satelliteInsert";
+    public static final String GROUP_UPDATE_ROUTING_KEY = "satelliteGroup";
+
 
     @Bean
-    public Queue updateQueue() {
-        return new Queue(UPDATE_QUEUE, true);
+    public DirectExchange exchange() {
+        return new DirectExchange(EXCHANGE_NAME);
+    }
+
+
+    @Bean
+    public Queue satelliteQueue() {
+        return new Queue(SATELLITE_QUEUE, true);
+    }
+    @Bean
+    public Queue satelliteUpdateQueue() {
+        return new Queue(SATELLITE_UPDATE_QUEUE, true);
     }
 
     @Bean
-    public Queue insertQueue() {
-        return new Queue(INSERT_QUEUE, true);
+    public Queue satelliteInsertQueue() {
+        return new Queue(SATELLITE_INSERT_QUEUE, true);
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(EXCHANGE_NAME);
+    public Queue groupUpdateQueue() {
+        return new Queue(SATELLITE_GROUP_QUEUE, true);
+    }
+
+
+    @Bean
+    public Binding satelliteBinding(Queue satelliteQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(satelliteQueue).to(exchange).with(SATELLITE_ROUTING_KEY);
     }
 
     @Bean
-    public Binding updateBinding(Queue updateQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(updateQueue).to(exchange).with(UPDATE_ROUTING_KEY);
+    public Binding groupUpdateBinding(Queue groupUpdateQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(groupUpdateQueue).to(exchange).with(GROUP_UPDATE_ROUTING_KEY);
     }
 
     @Bean
-    public Binding insertBinding(Queue insertQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(insertQueue).to(exchange).with(INSERT_ROUTING_KEY);
+    public Binding satelliteUpdateBinding(Queue satelliteUpdateQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(satelliteUpdateQueue).to(exchange).with(SATELLITE_UPDATE_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding satelliteInsertBinding(Queue satelliteInsertQueue, DirectExchange exchange) {
+        return BindingBuilder.bind(satelliteInsertQueue).to(exchange).with(SATELLITE_INSERT_ROUTING_KEY);
     }
 }

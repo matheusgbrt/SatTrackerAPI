@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class ApiController {
+public class CelestrakController {
 
     @Autowired
     private ApiService apiService;
 
     @GetMapping("/fetch-data")
     public Mono<ResponseEntity<CelestrakSatelliteData[]>> fetchData(
-            @RequestParam String group,
-            @RequestParam String format) {
-        return apiService.getSatelliteGroupData(group, format)
+            @RequestParam String group) {
+        return apiService.getSatelliteGroupData(group)
                 .map(ResponseEntity::ok);
     }
 }
